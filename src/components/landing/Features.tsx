@@ -9,12 +9,12 @@ export const Features = () => {
     },
     {
       icon: Zap,
-      title: "Auto-SQL Generation",
-      description: "Automatically converts your questions into optimized SQL queries behind the scenes.",
+      title: "SQL Transparency",
+      description: "See the auto-generated SQL queries behind your questions. Learn and optimize as you go.",
     },
     {
       icon: PieChart,
-      title: "Smart Visualizations",
+      title: "Rich Visualizations",
       description: "Intelligent chart selection and data visualization based on your query type and data.",
     },
     {
@@ -35,11 +35,11 @@ export const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-24 gradient-hero">
+    <section id="features" className="py-24 bg-surface">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Powerful <span className="text-gradient-accent">Features</span>
+            Powerful Features
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Everything you need to unlock insights from your data, built for modern teams.
@@ -50,13 +50,13 @@ export const Features = () => {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className="gradient-card p-8 rounded-2xl surface-elevated group hover:scale-105 transition-all-smooth cursor-pointer"
+              className="bg-white p-8 rounded-2xl shadow-card border card-hover"
             >
-              <div className="w-16 h-16 gradient-accent rounded-xl flex items-center justify-center mb-6 group-hover:glow-accent transition-all-smooth">
-                <feature.icon className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-google-blue/10 rounded-xl flex items-center justify-center mb-6">
+                <feature.icon className="w-8 h-8 google-blue" />
               </div>
               
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
+              <h3 className="text-xl font-bold mb-4">
                 {feature.title}
               </h3>
               

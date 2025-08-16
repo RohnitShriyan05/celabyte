@@ -2,56 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Celabyte Design System - Dark Mode with #272725 Base
-Primary: #272725 (dark base) | Accent: #00d4ff (cyan from logo)
-All colors MUST be HSL.
+/* Celabyte Design System - Google Cloud Inspired
+Primary: White backgrounds | Google Blue #4285F4 accent
+Clean, modern SaaS styling. All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Core Brand Colors - Dark #272725 Base */
-    --background: 60 1% 16%; /* #272725 */
-    --foreground: 0 0% 98%;
+    /* Core Brand Colors - Clean White Base */
+    --background: 0 0% 100%; /* Pure white */
+    --foreground: 0 0% 9%; /* Near black text */
 
-    --card: 60 2% 18%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 0 0% 9%;
 
-    --popover: 60 2% 20%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
 
-    /* Celabyte Cyan Accent - Logo Match */
-    --primary: 188 100% 50%; /* #00d4ff cyan */
-    --primary-foreground: 60 1% 16%;
+    /* Google Blue Primary */
+    --primary: 217 89% 61%; /* #4285F4 Google Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 60 2% 22%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 0 0% 96%; /* Light gray */
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 60 1% 25%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 188 100% 50%;
-    --accent-foreground: 60 1% 16%;
+    --accent: 217 89% 61%; /* Google Blue */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%; /* #EA4335 Google Red */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 60 1% 30%;
-    --input: 60 1% 25%;
-    --ring: 188 100% 50%;
+    --border: 0 0% 90%; /* Light gray borders */
+    --input: 0 0% 100%; /* White inputs */
+    --ring: 217 89% 61%; /* Google Blue ring */
+
+    /* Google Color Palette */
+    --google-blue: 217 89% 61%; /* #4285F4 */
+    --google-green: 142 71% 45%; /* #34A853 */
+    --google-yellow: 45 100% 51%; /* #FBBC05 */
+    --google-red: 0 72% 51%; /* #EA4335 */
 
     /* Design System Extensions */
-    --surface: 60 1% 20%;
-    --surface-hover: 60 2% 24%;
+    --surface: 0 0% 97%; /* Very light gray surface */
+    --surface-hover: 0 0% 95%;
     
-    /* Gradients - Dark with Cyan */
-    --gradient-hero: linear-gradient(135deg, hsl(60 1% 16%), hsl(60 2% 12%));
-    --gradient-card: linear-gradient(145deg, hsl(60 2% 18%), hsl(60 1% 22%));
-    --gradient-accent: linear-gradient(135deg, hsl(188 100% 50%), hsl(188 90% 60%));
+    /* Gradients - Clean and Subtle */
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(217 89% 96%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    --gradient-accent: linear-gradient(135deg, hsl(217 89% 61%), hsl(217 89% 71%));
     
-    /* Shadows & Effects */
-    --shadow-glow: 0 0 40px hsl(188 100% 50% / 0.15);
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.3);
-    --shadow-elevated: 0 20px 60px hsl(0 0% 0% / 0.4);
+    /* Shadows & Effects - Google Style */
+    --shadow-glow: 0 0 20px hsl(217 89% 61% / 0.15);
+    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.08);
+    --shadow-elevated: 0 8px 24px hsl(0 0% 0% / 0.12);
+    --shadow-hover: 0 4px 12px hsl(0 0% 0% / 0.15);
 
     --radius: 0.75rem;
 
@@ -123,7 +130,7 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Custom Component Variants */
+  /* Google Cloud Style Components */
   .gradient-hero {
     background: var(--gradient-hero);
   }
@@ -136,18 +143,68 @@ All colors MUST be HSL.
     background: var(--gradient-accent);
   }
   
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .shadow-hover {
+    box-shadow: var(--shadow-hover);
+  }
+  
   .glow-accent {
     box-shadow: var(--shadow-glow);
   }
   
-  .surface-elevated {
-    background: hsl(var(--surface));
-    box-shadow: var(--shadow-elevated);
+  /* Google Color Utilities */
+  .google-blue {
+    color: hsl(var(--google-blue));
+  }
+  
+  .bg-google-blue {
+    background-color: hsl(var(--google-blue));
+  }
+  
+  .google-green {
+    color: hsl(var(--google-green));
+  }
+  
+  .bg-google-green {
+    background-color: hsl(var(--google-green));
+  }
+  
+  .google-yellow {
+    color: hsl(var(--google-yellow));
+  }
+  
+  .bg-google-yellow {
+    background-color: hsl(var(--google-yellow));
+  }
+  
+  .google-red {
+    color: hsl(var(--google-red));
+  }
+  
+  .bg-google-red {
+    background-color: hsl(var(--google-red));
   }
   
   /* Smooth Animations */
   .transition-all-smooth {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Card Styles */
+  .card-hover {
+    transition: all 0.2s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
   }
   
   /* Text Gradients */
