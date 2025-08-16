@@ -2,51 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Celabyte Design System - Modern SaaS Landing Page
-Primary: #272725 (dark base) | Accent: #42a1f5 (bright blue)
+/* Celabyte Design System - Logo-Inspired Dark Navy Theme
+Primary: #1a2332 (dark navy) | Accent: #00d4ff (cyan blue)
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Core Brand Colors */
-    --background: 60 1% 16%; /* #272725 */
+    /* Core Brand Colors - Logo Inspired */
+    --background: 215 30% 15%; /* Dark navy like logo */
     --foreground: 0 0% 98%;
 
-    --card: 60 2% 18%;
+    --card: 215 28% 17%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 60 2% 20%;
+    --popover: 215 30% 19%;
     --popover-foreground: 0 0% 95%;
 
-    /* Celabyte Blue Accent */
-    --primary: 208 90% 62%; /* #42a1f5 */
-    --primary-foreground: 0 0% 100%;
+    /* Celabyte Cyan Accent - Logo Match */
+    --primary: 188 100% 50%; /* #00d4ff cyan */
+    --primary-foreground: 215 30% 15%;
 
-    --secondary: 60 2% 22%;
+    --secondary: 215 25% 22%;
     --secondary-foreground: 0 0% 90%;
 
-    --muted: 60 1% 25%;
+    --muted: 215 20% 25%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 208 90% 62%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 188 100% 50%;
+    --accent-foreground: 215 30% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 60 1% 30%;
-    --input: 60 1% 25%;
-    --ring: 208 90% 62%;
+    --border: 215 20% 30%;
+    --input: 215 25% 25%;
+    --ring: 188 100% 50%;
 
     /* Design System Extensions */
-    --surface: 60 1% 20%;
-    --surface-hover: 60 2% 24%;
+    --surface: 215 25% 20%;
+    --surface-hover: 215 28% 24%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(60 1% 16%), hsl(60 2% 12%));
-    --gradient-card: linear-gradient(145deg, hsl(60 2% 18%), hsl(60 1% 22%));
-    --gradient-accent: linear-gradient(135deg, hsl(208 90% 62%), hsl(208 85% 70%));
+    /* Gradients - Logo Inspired */
+    --gradient-hero: linear-gradient(135deg, hsl(215 30% 15%), hsl(215 35% 12%));
+    --gradient-card: linear-gradient(145deg, hsl(215 28% 17%), hsl(215 25% 22%));
+    --gradient-accent: linear-gradient(135deg, hsl(188 100% 50%), hsl(188 90% 60%));
     
     /* Shadows & Effects */
     --shadow-glow: 0 0 40px hsl(208 90% 62% / 0.15);

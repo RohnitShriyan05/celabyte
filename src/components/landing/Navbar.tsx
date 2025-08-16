@@ -17,7 +17,12 @@ export const Navbar = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/360d483a-e8ee-4762-a1b0-1f42c89b6bc9.png" 
+              alt="Celabyte Logo" 
+              className="w-10 h-10"
+            />
             <div className="text-2xl font-bold text-gradient-accent">
               Celabyte
             </div>
