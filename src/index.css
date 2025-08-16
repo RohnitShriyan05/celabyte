@@ -2,56 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Celabyte Design System - Light Mode with Logo-Inspired Cyan
-Primary: Light backgrounds | Accent: #00d4ff (cyan blue)
+/* Celabyte Design System - Dark Mode with #272725 Base
+Primary: #272725 (dark base) | Accent: #00d4ff (cyan from logo)
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Core Brand Colors - Light Mode */
-    --background: 0 0% 98%; /* Light background */
-    --foreground: 215 30% 15%; /* Dark navy for text */
+    /* Core Brand Colors - Dark #272725 Base */
+    --background: 60 1% 16%; /* #272725 */
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%; /* Pure white cards */
-    --card-foreground: 215 30% 15%;
+    --card: 60 2% 18%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 30% 15%;
+    --popover: 60 2% 20%;
+    --popover-foreground: 0 0% 95%;
 
     /* Celabyte Cyan Accent - Logo Match */
-    --primary: 188 100% 45%; /* Slightly darker cyan for better contrast */
-    --primary-foreground: 0 0% 100%;
+    --primary: 188 100% 50%; /* #00d4ff cyan */
+    --primary-foreground: 60 1% 16%;
 
-    --secondary: 210 20% 95%; /* Light gray secondary */
-    --secondary-foreground: 215 30% 15%;
+    --secondary: 60 2% 22%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 210 15% 92%; /* Very light gray */
-    --muted-foreground: 215 20% 40%;
+    --muted: 60 1% 25%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 188 100% 45%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 188 100% 50%;
+    --accent-foreground: 60 1% 16%;
 
-    --destructive: 0 84% 50%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 15% 85%; /* Light borders */
-    --input: 210 15% 95%; /* Light input backgrounds */
-    --ring: 188 100% 45%;
+    --border: 60 1% 30%;
+    --input: 60 1% 25%;
+    --ring: 188 100% 50%;
 
     /* Design System Extensions */
-    --surface: 0 0% 100%; /* White surface */
-    --surface-hover: 210 15% 97%; /* Subtle hover */
+    --surface: 60 1% 20%;
+    --surface-hover: 60 2% 24%;
     
-    /* Gradients - Light Mode */
-    --gradient-hero: linear-gradient(135deg, hsl(210 25% 97%), hsl(188 30% 95%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 97%));
-    --gradient-accent: linear-gradient(135deg, hsl(188 100% 45%), hsl(188 90% 55%));
+    /* Gradients - Dark with Cyan */
+    --gradient-hero: linear-gradient(135deg, hsl(60 1% 16%), hsl(60 2% 12%));
+    --gradient-card: linear-gradient(145deg, hsl(60 2% 18%), hsl(60 1% 22%));
+    --gradient-accent: linear-gradient(135deg, hsl(188 100% 50%), hsl(188 90% 60%));
     
-    /* Shadows & Effects - Softer for light mode */
-    --shadow-glow: 0 0 30px hsl(188 100% 45% / 0.2);
-    --shadow-card: 0 4px 20px hsl(215 30% 15% / 0.08);
-    --shadow-elevated: 0 8px 40px hsl(215 30% 15% / 0.12);
+    /* Shadows & Effects */
+    --shadow-glow: 0 0 40px hsl(188 100% 50% / 0.15);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.3);
+    --shadow-elevated: 0 20px 60px hsl(0 0% 0% / 0.4);
 
     --radius: 0.75rem;
 
