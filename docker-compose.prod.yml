@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  # Database
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: saasdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Backend API Server
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    environment:
+      - NODE_ENV=production
+      - PORT=9090
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/saasdb
+      - CORS_ORIGIN=${CORS_ORIGIN:-*}
+      - JWT_ISSUER=${JWT_ISSUER:-https://your-saas.com}
+      - JWT_AUDIENCE=${JWT_AUDIENCE:-https://api.your-saas.com}
+      - JWT_HS256_SECRET=${JWT_HS256_SECRET:-your-secret-key}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SECRETS_BACKEND=${SECRETS_BACKEND:-env}
+    depends_on:
+      - db
+    networks:
+      - app-network
+    volumes:
+      - ./server/.env:/app/.env:ro
+
+  # Frontend Dashboard
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+
+volumes:
+  pgdata:
+
+networks:
+  app-network:
+    driver: bridge

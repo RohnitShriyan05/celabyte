@@ -1,0 +1,261 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Tenant {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  connections Connection[]
+  tables      AllowedTable[]
+  users       UserTenant[]
+  subscription Subscription?
+}
+
+model Connection {
+  id          String         @id @default(cuid())
+  tenantId    String
+  kind        ConnKind
+  displayName String
+
+  encUri      String
+  encMeta     String
+  readOnly    Boolean        @default(true)
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  Tenant      Tenant         @relation(fields: [tenantId], references: [id])
+  tables      AllowedTable[] // 👈 opposite side of relation
+}
+
+model AllowedTable {
+  id           String       @id @default(cuid())
+  tenantId     String
+  connectionId String?
+  name         String       // schema.table or db.collection or sheet!tab
+  allowedCols  String       @default("[]") // JSON string of columns; empty array = all
+
+  Tenant       Tenant       @relation(fields: [tenantId], references: [id])
+  Connection   Connection?  @relation(fields: [connectionId], references: [id])
+}
+
+model UserTenant {
+  id        String   @id @default(cuid())
+  userId    String
+  tenantId  String
+  role      String
+
+  Tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+enum ConnKind {
+  POSTGRES
+  MYSQL
+  MONGODB
+  EXCEL
+}
+
+model QueryLog {
+  id          String   @id @default(cuid())
+  tenantId    String
+  userId      String?
+  tool        String
+  target      String?
+  params      Json
+  rowCount    Int?
+  durationMs  Int
+  ok          Boolean
+  error       String?
+  createdAt   DateTime @default(now())
+}
+
+model ChatConversation {
+  id          String        @id @default(cuid())
+  tenantId    String
+  userId      String
+  title       String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  messages    ChatMessage[]
+  
+  @@index([tenantId, userId])
+}
+
+model ChatMessage {
+  id             String           @id @default(cuid())
+  conversationId String
+  role           MessageRole
+  content        String
+  metadata       Json?            // Store query results, tool info, etc.
+  createdAt      DateTime         @default(now())
+  
+  conversation   ChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  @@index([conversationId])
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+model User {
+  id                String        @id @default(cuid())
+  email             String        @unique
+  name              String?
+  phone             String?
+  avatarUrl         String?
+  timezone          String?       @default("UTC")
+  locale            String?       @default("en-US")
+  emailVerified     Boolean       @default(false)
+  twoFactorEnabled  Boolean       @default(false)
+  passwordHash      String
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  tenants           UserTenant[]
+  userSettings      UserSettings?
+}
+
+model UserSettings {
+  id                  String                  @id @default(cuid())
+  userId              String                  @unique
+  theme               String                  @default("system")
+  notificationPrefs   NotificationPreferences?
+  emailPrefs          EmailPreferences?
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+  user                User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model NotificationPreferences {
+  id              String       @id @default(cuid())
+  userSettingsId  String       @unique
+  email           Boolean      @default(true)
+  push            Boolean      @default(true)
+  desktop         Boolean      @default(true)
+  userSettings    UserSettings @relation(fields: [userSettingsId], references: [id], onDelete: Cascade)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model EmailPreferences {
+  id             String       @id @default(cuid())
+  settingsId     String       @unique
+  marketing      Boolean      @default(true)
+  productUpdates Boolean      @default(true)
+  securityAlerts Boolean      @default(true)
+  settings       UserSettings @relation(fields: [settingsId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id            String            @id @default(cuid())
+  tenantId      String            @unique
+  planId        String
+  status        SubscriptionStatus
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean       @default(false)
+  stripeCustomerId   String?
+  stripeSubscriptionId String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  
+  tenant        Tenant            @relation(fields: [tenantId], references: [id])
+  plan          Plan              @relation(fields: [planId], references: [id])
+  usage         UsageRecord[]
+  invoices      Invoice[]
+}
+
+model Plan {
+  id            String        @id @default(cuid())
+  name          String        @unique
+  displayName   String
+  price         Int           // Price in cents
+  currency      String        @default("usd")
+  interval      String        // "month" or "year"
+  features      Json          // JSON object with plan features
+  limits        Json          // JSON object with plan limits
+  active        Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  subscriptions Subscription[]
+}
+
+model UsageRecord {
+  id             String       @id @default(cuid())
+  subscriptionId String
+  tenantId       String
+  metric         UsageMetric
+  quantity       Int
+  timestamp      DateTime     @default(now())
+  metadata       Json?
+  
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  subscriptionId String
+  tenantId       String
+  amount         Int           // Amount in cents
+  currency       String        @default("usd")
+  status         InvoiceStatus
+  periodStart    DateTime
+  periodEnd      DateTime
+  dueDate        DateTime
+  paidAt         DateTime?
+  stripeInvoiceId String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  
+  subscription   Subscription  @relation(fields: [subscriptionId], references: [id])
+  items          InvoiceItem[]
+}
+
+model InvoiceItem {
+  id          String  @id @default(cuid())
+  invoiceId   String
+  description String
+  quantity    Int
+  unitPrice   Int     // Price in cents
+  amount      Int     // Total amount in cents
+  
+  invoice     Invoice @relation(fields: [invoiceId], references: [id])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  TRIALING
+}
+
+enum UsageMetric {
+  QUERIES
+  CONNECTIONS
+  TEAM_MEMBERS
+  API_CALLS
+}
+
+enum InvoiceStatus {
+  DRAFT
+  OPEN
+  PAID
+  VOID
+  UNCOLLECTIBLE
+}
