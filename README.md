@@ -30,6 +30,7 @@ celabyte/
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React 18** with TypeScript
 - **Vite** for fast development and building
 - **Tailwind CSS** for styling
@@ -38,6 +39,7 @@ celabyte/
 - **React Query** for state management
 
 ### Backend
+
 - **Node.js** with Express
 - **TypeScript** for type safety
 - **Prisma ORM** for database operations
@@ -47,6 +49,7 @@ celabyte/
 - **Docker** for containerization
 
 ### DevOps
+
 - **Docker & Docker Compose** for development and deployment
 - **ESLint** for code quality
 - **Prettier** for code formatting
@@ -80,7 +83,7 @@ celabyte/
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - PostgreSQL (for metadata storage)
 - Gemini AI API Key or OpenAI API Key
 
@@ -152,15 +155,19 @@ npm run dev
 ## 🔑 Where to Enter Your Gemini API Key
 
 ### Option 1: Environment Variable (Recommended)
+
 Add your Gemini API key to the server `.env` file:
+
 ```env
 GEMINI_API_KEY=your-actual-gemini-api-key-here
 ```
 
 ### Option 2: Direct Configuration
+
 Update `server/src/config/env.ts` if needed, but environment variables are preferred for security.
 
 ### Getting a Gemini API Key:
+
 1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. Sign in with your Google account
 3. Create a new API key
@@ -208,21 +215,25 @@ JWT_HS256_SECRET=your-production-jwt-secret
 ## 📊 API Endpoints
 
 ### Authentication
+
 - `POST /auth/login` - User authentication
 - `POST /auth/register` - User registration
 - `POST /auth/refresh` - Token refresh
 
 ### Query Console
+
 - `POST /agent` - Execute natural language query
 - `GET /agent/health` - Check AI provider status
 
 ### Query Management
+
 - `GET /queries/history` - Get query history
 - `GET /queries/stats` - Get query statistics
 - `DELETE /queries/:id` - Delete specific query
 - `DELETE /queries` - Clear all history
 
 ### Database Connections
+
 - `GET /connections` - List tenant connections
 - `POST /connections` - Add new connection
 - `PUT /connections/:id` - Update connection
@@ -253,12 +264,12 @@ JWT_HS256_SECRET=your-production-jwt-secret
 
 ```typescript
 export const SECURITY = {
-  maxBodyBytes: 256 * 1024,     // 256 KB request limit
-  queryTimeoutMs: 30_000,       // 30 second timeout
-  maxLimit: 1000,               // Max rows returned
-  maxQueryComplexity: 50,       // Query complexity threshold
-  rateLimitRequests: 100        // Requests per minute per tenant
-}
+  maxBodyBytes: 256 * 1024, // 256 KB request limit
+  queryTimeoutMs: 30_000, // 30 second timeout
+  maxLimit: 1000, // Max rows returned
+  maxQueryComplexity: 50, // Query complexity threshold
+  rateLimitRequests: 100, // Requests per minute per tenant
+};
 ```
 
 ### AI Provider Selection
@@ -270,13 +281,16 @@ The system automatically uses Gemini AI by default, with OpenAI as fallback. Use
 ### Common Issues
 
 1. **"No AI provider configured"**
+
    - Ensure GEMINI_API_KEY or OPENAI_API_KEY is set in `.env`
 
 2. **Database connection errors**
+
    - Verify DATABASE_URL is correct
    - Check database is running and accessible
 
 3. **CORS errors**
+
    - Update CORS_ORIGIN in server `.env` to match frontend URL
 
 4. **Build failures**
@@ -312,6 +326,7 @@ This project is licensed under the MIT License.
 ## 🆘 Support
 
 For issues and questions:
+
 1. Check the troubleshooting section above
 2. Review server logs for error details
 3. Ensure all environment variables are properly configured

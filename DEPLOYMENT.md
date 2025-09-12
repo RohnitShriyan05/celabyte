@@ -9,6 +9,7 @@
 ## Quick Start
 
 1. **Setup Environment**:
+
    ```bash
    cp .env.prod.example .env.prod
    # Edit .env.prod with your actual values
@@ -24,16 +25,19 @@
 If you prefer to run commands manually:
 
 1. **Build Images**:
+
    ```bash
    docker-compose -f docker-compose.prod.yml build
    ```
 
 2. **Start Database**:
+
    ```bash
    docker-compose -f docker-compose.prod.yml up -d db
    ```
 
 3. **Run Migrations**:
+
    ```bash
    cd server
    npx prisma migrate deploy
@@ -70,6 +74,7 @@ If you prefer to run commands manually:
 ## Monitoring & Maintenance
 
 ### Check Logs:
+
 ```bash
 # All services
 docker-compose -f docker-compose.prod.yml logs -f
@@ -81,6 +86,7 @@ docker-compose -f docker-compose.prod.yml logs -f db
 ```
 
 ### Restart Services:
+
 ```bash
 # Restart all
 docker-compose -f docker-compose.prod.yml restart
@@ -90,11 +96,13 @@ docker-compose -f docker-compose.prod.yml restart server
 ```
 
 ### Stop Services:
+
 ```bash
 docker-compose -f docker-compose.prod.yml down
 ```
 
 ### Update Application:
+
 ```bash
 # Pull latest changes
 git pull origin main

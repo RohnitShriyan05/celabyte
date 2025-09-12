@@ -7,7 +7,8 @@ This guide will help you push your Celabyte monorepo to GitHub.
 ### 1. Create a New GitHub Repository
 
 Go to [GitHub](https://github.com/new) and create a new repository:
-- **Repository name**: `celabyte` 
+
+- **Repository name**: `celabyte`
 - **Description**: `AI Database Management Platform - Full Stack SaaS Application`
 - **Visibility**: Public or Private (your choice)
 - **Don't** initialize with README, .gitignore, or license (we already have them)
@@ -27,12 +28,15 @@ git push -u origin main
 ### 3. Set Up Repository Settings
 
 #### Enable GitHub Pages (Optional)
+
 If you want to host documentation:
+
 1. Go to Settings → Pages
 2. Source: Deploy from a branch
 3. Branch: main → /docs
 
 #### Set Up Branch Protection
+
 1. Go to Settings → Branches
 2. Add rule for `main` branch:
    - Require pull request reviews
@@ -40,7 +44,9 @@ If you want to host documentation:
    - Restrict pushes to matching branches
 
 #### Configure Repository Topics
+
 Add these topics to make your repository discoverable:
+
 ```
 ai, database, saas, react, typescript, nodejs, express, prisma, openai, supabase, docker, full-stack
 ```
@@ -50,11 +56,13 @@ ai, database, saas, react, typescript, nodejs, express, prisma, openai, supabase
 If you plan to set up CI/CD, add these secrets in Settings → Secrets and variables → Actions:
 
 ### Required Secrets
+
 - `OPENAI_API_KEY`: Your OpenAI API key
 - `DATABASE_URL`: Production database URL
 - `JWT_HS256_SECRET`: JWT signing secret
 
 ### Optional Secrets (for deployment)
+
 - `DOCKER_USERNAME`: Docker Hub username
 - `DOCKER_PASSWORD`: Docker Hub password
 - `SUPABASE_URL`: Supabase project URL
@@ -90,46 +98,46 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        
-    - name: Install dependencies
-      run: npm run install:all
-      
-    - name: Run linting
-      run: npm run lint
-      
-    - name: Run tests
-      run: npm run test
-      
-    - name: Build applications
-      run: npm run build
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm run install:all
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build applications
+        run: npm run build
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Deploy to production
-      run: |
-        # Add your deployment commands here
-        echo "Deploying to production..."
+      - uses: actions/checkout@v3
+
+      - name: Deploy to production
+        run: |
+          # Add your deployment commands here
+          echo "Deploying to production..."
 ```
 
 ## 📚 Next Steps
@@ -153,6 +161,7 @@ After pushing to GitHub:
 ## 🆘 Troubleshooting
 
 ### Authentication Issues
+
 If you get authentication errors:
 
 ```bash
@@ -164,6 +173,7 @@ git remote set-url origin git@github.com:YOUR_USERNAME/celabyte.git
 ```
 
 ### Large File Issues
+
 If you have large files:
 
 ```bash
