@@ -1,91 +1,111 @@
-import React from 'react';
-import { DashboardLayout } from '@/components/DashboardLayout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UserPlus, Shield, Edit, MoreHorizontal, Users, Crown, Eye } from 'lucide-react';
+import React from "react";
+import { DashboardLayout } from "@/components/DashboardLayout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  UserPlus,
+  Shield,
+  Edit,
+  MoreHorizontal,
+  Users,
+  Crown,
+  Eye,
+} from "lucide-react";
 
 const teamMembers = [
   {
     id: 1,
-    name: 'John Smith',
-    email: 'john.smith@company.com',
-    role: 'Admin',
-    avatar: '/api/placeholder/32/32',
-    status: 'Active',
-    lastActive: '2 minutes ago',
+    name: "John Smith",
+    email: "john.smith@company.com",
+    role: "Admin",
+    avatar: "/api/placeholder/32/32",
+    status: "Active",
+    lastActive: "2 minutes ago",
     queries: 1247,
-    databases: ['Production DB', 'Analytics DB']
+    databases: ["Production DB", "Analytics DB"],
   },
   {
     id: 2,
-    name: 'Sarah Wilson',
-    email: 'sarah.wilson@company.com',
-    role: 'Editor',
-    avatar: '/api/placeholder/32/32',
-    status: 'Active',
-    lastActive: '1 hour ago',
+    name: "Sarah Wilson",
+    email: "sarah.wilson@company.com",
+    role: "Editor",
+    avatar: "/api/placeholder/32/32",
+    status: "Active",
+    lastActive: "1 hour ago",
     queries: 834,
-    databases: ['Analytics DB']
+    databases: ["Analytics DB"],
   },
   {
     id: 3,
-    name: 'Mike Johnson',
-    email: 'mike.johnson@company.com',
-    role: 'Viewer',
-    avatar: '/api/placeholder/32/32',
-    status: 'Invited',
-    lastActive: 'Never',
+    name: "Mike Johnson",
+    email: "mike.johnson@company.com",
+    role: "Viewer",
+    avatar: "/api/placeholder/32/32",
+    status: "Invited",
+    lastActive: "Never",
     queries: 0,
-    databases: []
+    databases: [],
   },
   {
     id: 4,
-    name: 'Emily Davis',
-    email: 'emily.davis@company.com',
-    role: 'Editor',
-    avatar: '/api/placeholder/32/32',
-    status: 'Active',
-    lastActive: '3 days ago',
+    name: "Emily Davis",
+    email: "emily.davis@company.com",
+    role: "Editor",
+    avatar: "/api/placeholder/32/32",
+    status: "Active",
+    lastActive: "3 days ago",
     queries: 456,
-    databases: ['Production DB']
-  }
+    databases: ["Production DB"],
+  },
 ];
 
 const roleColors = {
-  Admin: 'destructive',
-  Editor: 'default',
-  Viewer: 'secondary'
+  Admin: "destructive",
+  Editor: "default",
+  Viewer: "secondary",
 } as const;
 
 const statusColors = {
-  Active: 'default',
-  Invited: 'secondary',
-  Inactive: 'outline'
+  Active: "default",
+  Invited: "secondary",
+  Inactive: "outline",
 } as const;
 
 export function Team() {
   return (
     <DashboardLayout>
-      <div className="space-y-6 p-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Team Management</h1>
-            <p className="text-muted-foreground">Manage team members and their database access permissions</p>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+              Team Management
+            </h1>
+            <p className="text-muted-foreground text-sm sm:text-base">
+              Manage team members and their database access permissions
+            </p>
           </div>
-          <Button className="bg-primary hover:bg-primary-hover">
+          <Button className="bg-primary hover:bg-primary-hover w-full sm:w-auto">
             <UserPlus className="mr-2 h-4 w-4" />
             Invite Member
           </Button>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Members</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Members
+              </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -95,21 +115,29 @@ export function Team() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Members</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Active Members
+              </CardTitle>
               <div className="h-2 w-2 bg-success rounded-full"></div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{teamMembers.filter(m => m.status === 'Active').length}</div>
+              <div className="text-2xl font-bold">
+                {teamMembers.filter((m) => m.status === "Active").length}
+              </div>
               <p className="text-xs text-muted-foreground">75% of team</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Invites</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Pending Invites
+              </CardTitle>
               <UserPlus className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{teamMembers.filter(m => m.status === 'Invited').length}</div>
+              <div className="text-2xl font-bold">
+                {teamMembers.filter((m) => m.status === "Invited").length}
+              </div>
               <p className="text-xs text-muted-foreground">Awaiting response</p>
             </CardContent>
           </Card>
@@ -119,7 +147,9 @@ export function Team() {
               <Crown className="h-4 w-4 text-warning" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{teamMembers.filter(m => m.role === 'Admin').length}</div>
+              <div className="text-2xl font-bold">
+                {teamMembers.filter((m) => m.role === "Admin").length}
+              </div>
               <p className="text-xs text-muted-foreground">Full access</p>
             </CardContent>
           </Card>
@@ -129,54 +159,101 @@ export function Team() {
         <Card>
           <CardHeader>
             <CardTitle>Team Members</CardTitle>
-            <CardDescription>Manage roles and database access for your team</CardDescription>
+            <CardDescription>
+              Manage roles and database access for your team
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {teamMembers.map((member) => (
-                <div key={member.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-secondary/50 transition-colors">
+                <div
+                  key={member.id}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-secondary/50 transition-colors gap-4"
+                >
                   <div className="flex items-center space-x-4">
-                    <Avatar>
+                    <Avatar className="flex-shrink-0">
                       <AvatarImage src={member.avatar} alt={member.name} />
-                      <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                      <AvatarFallback>
+                        {member.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
                     </Avatar>
-                    <div>
-                      <div className="flex items-center space-x-2">
-                        <h3 className="font-semibold">{member.name}</h3>
-                        <Badge variant={roleColors[member.role as keyof typeof roleColors]}>
-                          {member.role === 'Admin' && <Crown className="mr-1 h-3 w-3" />}
-                          {member.role === 'Editor' && <Edit className="mr-1 h-3 w-3" />}
-                          {member.role === 'Viewer' && <Eye className="mr-1 h-3 w-3" />}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <h3 className="font-semibold truncate">
+                          {member.name}
+                        </h3>
+                        <Badge
+                          variant={
+                            roleColors[member.role as keyof typeof roleColors]
+                          }
+                          className="w-fit"
+                        >
+                          {member.role === "Admin" && (
+                            <Crown className="mr-1 h-3 w-3" />
+                          )}
+                          {member.role === "Editor" && (
+                            <Edit className="mr-1 h-3 w-3" />
+                          )}
+                          {member.role === "Viewer" && (
+                            <Eye className="mr-1 h-3 w-3" />
+                          )}
                           {member.role}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground">{member.email}</p>
-                      <div className="flex items-center space-x-4 mt-1">
-                        <Badge variant={statusColors[member.status as keyof typeof statusColors]} className="text-xs">
+                      <p className="text-sm text-muted-foreground truncate">
+                        {member.email}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2 mt-1">
+                        <Badge
+                          variant={
+                            statusColors[
+                              member.status as keyof typeof statusColors
+                            ]
+                          }
+                          className="text-xs"
+                        >
                           {member.status}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">Last active: {member.lastActive}</span>
+                        <span className="text-xs text-muted-foreground">
+                          Last active: {member.lastActive}
+                        </span>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-6">
-                    <div className="text-right">
-                      <p className="text-sm font-medium">{member.queries} queries</p>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                    <div className="flex justify-between sm:block sm:text-right">
+                      <p className="text-sm font-medium">
+                        {member.queries} queries
+                      </p>
                       <p className="text-xs text-muted-foreground">
-                        {member.databases.length > 0 
-                          ? `${member.databases.length} database${member.databases.length > 1 ? 's' : ''}`
-                          : 'No access'
-                        }
+                        {member.databases.length > 0
+                          ? `${member.databases.length} database${
+                              member.databases.length > 1 ? "s" : ""
+                            }`
+                          : "No access"}
                       </p>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 sm:flex-none"
+                      >
                         <Shield className="h-4 w-4" />
+                        <span className="ml-2 sm:hidden">Permissions</span>
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex-1 sm:flex-none"
+                      >
                         <MoreHorizontal className="h-4 w-4" />
+                        <span className="ml-2 sm:hidden">More</span>
                       </Button>
                     </div>
                   </div>
@@ -190,10 +267,12 @@ export function Team() {
         <Card>
           <CardHeader>
             <CardTitle>Role Permissions</CardTitle>
-            <CardDescription>Understanding what each role can do</CardDescription>
+            <CardDescription>
+              Understanding what each role can do
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center space-x-2 mb-3">
                   <Crown className="h-5 w-5 text-warning" />
@@ -207,7 +286,7 @@ export function Team() {
                   <li>• Security settings</li>
                 </ul>
               </div>
-              
+
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center space-x-2 mb-3">
                   <Edit className="h-5 w-5 text-primary" />
@@ -221,7 +300,7 @@ export function Team() {
                   <li>• Access assigned DBs</li>
                 </ul>
               </div>
-              
+
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center space-x-2 mb-3">
                   <Eye className="h-5 w-5 text-muted-foreground" />

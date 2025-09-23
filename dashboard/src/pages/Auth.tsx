@@ -1,71 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Mail, Lock, User, ArrowLeft } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, Mail, Lock, User, ArrowLeft } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
+  const { isAuthenticated, signIn, signUp } = useAuth();
 
   useEffect(() => {
-    // Check if user is already authenticated
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate('/');
-      }
-    };
-    checkAuth();
-  }, [navigate]);
+    // Redirect if already authenticated
+    if (isAuthenticated) {
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, location]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const redirectUrl = `${window.location.origin}/`;
-      
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: {
-            display_name: displayName || email.split('@')[0]
-          }
-        }
-      });
-
-      if (error) {
-        if (error.message.includes('already been registered')) {
-          setError('An account with this email already exists. Please sign in instead.');
-        } else {
-          setError(error.message);
-        }
-        return;
-      }
+      await signUp(email, password, displayName);
 
       toast({
         title: "Account created successfully!",
         description: "Please check your email to verify your account.",
       });
-      
+
       setIsSignUp(false);
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+    } catch (err: any) {
+      if (err.message?.includes("already been registered")) {
+        setError(
+          "An account with this email already exists. Please sign in instead."
+        );
+      } else {
+        setError(
+          err.message || "An unexpected error occurred. Please try again."
+        );
+      }
     } finally {
       setIsLoading(false);
     }
@@ -74,31 +67,28 @@ export function Auth() {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        if (error.message.includes('Invalid login credentials')) {
-          setError('Invalid email or password. Please check your credentials and try again.');
-        } else {
-          setError(error.message);
-        }
-        return;
-      }
+      await signIn(email, password);
 
       toast({
         title: "Welcome back!",
         description: "You've been signed in successfully.",
       });
-      
-      navigate('/');
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
+    } catch (err: any) {
+      if (err.message?.includes("Invalid login credentials")) {
+        setError(
+          "Invalid email or password. Please check your credentials and try again."
+        );
+      } else {
+        setError(
+          err.message || "An unexpected error occurred. Please try again."
+        );
+      }
     } finally {
       setIsLoading(false);
     }
@@ -111,13 +101,13 @@ export function Auth() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
-          
+
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               Cellabyte
@@ -131,18 +121,20 @@ export function Auth() {
         <Card className="backdrop-blur-sm bg-card/50 border-border/50">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">
-              {isSignUp ? 'Create Account' : 'Sign In'}
+              {isSignUp ? "Create Account" : "Sign In"}
             </CardTitle>
             <CardDescription className="text-center">
-              {isSignUp 
-                ? 'Enter your details to create a new account' 
-                : 'Enter your credentials to access your account'
-              }
+              {isSignUp
+                ? "Enter your details to create a new account"
+                : "Enter your credentials to access your account"}
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent>
-            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
+            <form
+              onSubmit={isSignUp ? handleSignUp : handleSignIn}
+              className="space-y-4"
+            >
               {isSignUp && (
                 <div className="space-y-2">
                   <Label htmlFor="displayName">Display Name</Label>
@@ -159,7 +151,7 @@ export function Auth() {
                   </div>
                 </div>
               )}
-              
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">
@@ -175,7 +167,7 @@ export function Auth() {
                   />
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
@@ -205,7 +197,7 @@ export function Auth() {
                 disabled={isLoading}
               >
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isSignUp ? 'Create Account' : 'Sign In'}
+                {isSignUp ? "Create Account" : "Sign In"}
               </Button>
             </form>
 
@@ -214,17 +206,16 @@ export function Auth() {
                 variant="link"
                 onClick={() => {
                   setIsSignUp(!isSignUp);
-                  setError('');
-                  setEmail('');
-                  setPassword('');
-                  setDisplayName('');
+                  setError("");
+                  setEmail("");
+                  setPassword("");
+                  setDisplayName("");
                 }}
                 className="text-sm"
               >
-                {isSignUp 
-                  ? 'Already have an account? Sign in' 
-                  : "Don't have an account? Sign up"
-                }
+                {isSignUp
+                  ? "Already have an account? Sign in"
+                  : "Don't have an account? Sign up"}
               </Button>
             </div>
           </CardContent>

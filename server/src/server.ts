@@ -6,7 +6,7 @@ import compression from "compression";
 import rateLimit from "express-rate-limit";
 import { env } from "./config/env";
 import { logger } from "./utils/logger";
-import { authMiddleware } from "./auth/jwt";
+import { supabaseAuthMiddleware } from "./auth/supabase";
 import { tenantContext } from "./middleware/tenant";
 import agentRouter from "./routes/agent";
 import healthRouter from "./routes/health";
@@ -36,7 +36,7 @@ app.use("/health", healthRouter);
 app.use("/auth", authRouter);
 
 // Auth then tenant context for protected routes
-app.use(authMiddleware); // attaches req.user
+app.use(supabaseAuthMiddleware); // attaches req.user
 app.use(tenantContext); // attaches req.tenant, req.role
 
 app.use("/agent", agentRouter);
@@ -52,4 +52,4 @@ app.use((err: any, _req: any, res: any, _next: any) => {
   res.status(status).json({ error: err.message ?? "Internal Server Error" });
 });
 
-app.listen(env.port, '0.0.0.0', () => logger.info(`api up on :${env.port}`));
+app.listen(env.port, "0.0.0.0", () => logger.info(`api up on :${env.port}`));

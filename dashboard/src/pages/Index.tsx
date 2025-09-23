@@ -1,16 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { DashboardLayout } from '@/components/DashboardLayout';
-import { StatsOverview } from '@/components/StatsOverview';
-import { QuickActions } from '@/components/QuickActions';
-import { RecentActivity } from '@/components/RecentActivity';
-import { DatabaseStatus } from '@/components/DatabaseStatus';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { useAuth } from '@/hooks/useAuth';
-import { Database, MessageSquare, BarChart3, Shield, LogIn, BookOpen, Sparkles } from 'lucide-react';
-import heroImage from '@/assets/dashboard-hero.jpg';
+import React from "react";
+import { Link } from "react-router-dom";
+import { DashboardLayout } from "@/components/DashboardLayout";
+import { StatsOverview } from "@/components/StatsOverview";
+import { QuickActions } from "@/components/QuickActions";
+import { RecentActivity } from "@/components/RecentActivity";
+import { DatabaseStatus } from "@/components/DatabaseStatus";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  Database,
+  MessageSquare,
+  BarChart3,
+  Shield,
+  LogIn,
+  BookOpen,
+  Sparkles,
+} from "lucide-react";
+import heroImage from "@/assets/dashboard-hero.jpg";
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -53,20 +67,24 @@ const Index = () => {
               <div className="space-y-8">
                 <div className="space-y-4">
                   <h1 className="text-4xl lg:text-6xl font-bold tracking-tight">
-                    Chat with your{' '}
+                    Chat with your{" "}
                     <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                       databases
                     </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Connect PostgreSQL, MySQL, MongoDB, Excel and Sheets. Query your data using natural language 
-                    and get instant insights without writing SQL.
+                    Connect PostgreSQL, MySQL, MongoDB, Excel and Sheets. Query
+                    your data using natural language and get instant insights
+                    without writing SQL.
                   </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link to="/auth">
-                    <Button size="lg" className="bg-primary hover:bg-primary/90">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90"
+                    >
                       Start Free Trial
                     </Button>
                   </Link>
@@ -82,7 +100,9 @@ const Index = () => {
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary">500+</div>
-                    <div className="text-sm text-muted-foreground">Companies</div>
+                    <div className="text-sm text-muted-foreground">
+                      Companies
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary">1M+</div>
@@ -107,7 +127,9 @@ const Index = () => {
         <div className="py-16 bg-secondary/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl font-bold">Everything you need to query your data</h2>
+              <h2 className="text-3xl font-bold">
+                Everything you need to query your data
+              </h2>
               <p className="text-xl text-muted-foreground">
                 Powerful features to help you understand your data better
               </p>
@@ -118,9 +140,12 @@ const Index = () => {
                 <div className="mx-auto w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                   <MessageSquare className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold">Natural Language Queries</h3>
+                <h3 className="text-xl font-semibold">
+                  Natural Language Queries
+                </h3>
                 <p className="text-muted-foreground">
-                  Ask questions in plain English and get instant SQL results. No technical knowledge required.
+                  Ask questions in plain English and get instant SQL results. No
+                  technical knowledge required.
                 </p>
               </div>
 
@@ -130,7 +155,8 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold">Visual Analytics</h3>
                 <p className="text-muted-foreground">
-                  Automatically generate charts and graphs from your query results for better insights.
+                  Automatically generate charts and graphs from your query
+                  results for better insights.
                 </p>
               </div>
 
@@ -140,7 +166,8 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold">Enterprise Security</h3>
                 <p className="text-muted-foreground">
-                  Bank-grade security with read-only access, encrypted connections, and role-based permissions.
+                  Bank-grade security with read-only access, encrypted
+                  connections, and role-based permissions.
                 </p>
               </div>
             </div>
@@ -153,32 +180,41 @@ const Index = () => {
   // If user is authenticated, show dashboard
   return (
     <DashboardLayout>
-      <div className="p-6 space-y-6">
+      <div className="space-y-6">
         {/* Hero Section */}
         <div className="relative overflow-hidden rounded-2xl">
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${heroImage})` }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-white/10 to-transparent" />
-          <div className="relative p-8 text-left">
+          <div className="relative p-4 sm:p-6 md:p-8 text-left">
             <div className="max-w-2xl">
-              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 <Sparkles className="w-3 h-3 mr-1" />
                 AI-Powered Database Assistant
               </Badge>
-              <h1 className="text-4xl font-bold mb-4 gradient-text">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 gradient-text">
                 Welcome to Cellabyte
               </h1>
-              <p className="text-xl text-neutral-300 mb-6">
-                Chat with your databases in natural language. Connect PostgreSQL, MySQL, MongoDB, and Excel files to get instant insights from your data.
+              <p className="text-base sm:text-lg lg:text-xl text-neutral-300 mb-6 leading-relaxed">
+                Chat with your databases in natural language. Connect
+                PostgreSQL, MySQL, MongoDB, and Excel files to get instant
+                insights from your data.
               </p>
-              <div className="flex space-x-4">
-                <Button size="lg" className="bg-primary hover:bg-primary-hover">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary-hover w-full sm:w-auto"
+                >
                   <BookOpen className="w-4 h-4 mr-2" />
                   Get Started Guide
                 </Button>
-                <Button variant="outline" size="lg">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
                   <BarChart3 className="w-4 h-4 mr-2" />
                   View Analytics
                 </Button>
@@ -191,14 +227,14 @@ const Index = () => {
         <StatsOverview />
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
+          <div className="xl:col-span-2 space-y-4 md:space-y-6">
             <QuickActions />
             <RecentActivity />
           </div>
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <DatabaseStatus />
-            
+
             {/* Support Card */}
             <Card>
               <CardHeader>

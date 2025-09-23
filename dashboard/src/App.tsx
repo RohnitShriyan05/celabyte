@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { AuthGuard } from "@/components/AuthGuard";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Databases from "./pages/Databases";
@@ -29,19 +30,103 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/databases" element={<Databases />} />
-            <Route path="/console" element={<Console />} />
-            <Route path="/queries" element={<Queries />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/api-keys" element={<ApiKeys />} />
-            <Route path="/billing" element={<Billing />} />
-            <Route path="/security" element={<Security />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/"
+              element={
+                <AuthGuard>
+                  <Index />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/databases"
+              element={
+                <AuthGuard>
+                  <Databases />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/console"
+              element={
+                <AuthGuard>
+                  <Console />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/queries"
+              element={
+                <AuthGuard>
+                  <Queries />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/team"
+              element={
+                <AuthGuard>
+                  <Team />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/api-keys"
+              element={
+                <AuthGuard>
+                  <ApiKeys />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/billing"
+              element={
+                <AuthGuard>
+                  <Billing />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/security"
+              element={
+                <AuthGuard>
+                  <Security />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <AuthGuard>
+                  <Notifications />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/help"
+              element={
+                <AuthGuard>
+                  <Help />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <AuthGuard>
+                  <Profile />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <AuthGuard>
+                  <Settings />
+                </AuthGuard>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
