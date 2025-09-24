@@ -18,6 +18,9 @@ import Notifications from "./pages/Notifications";
 import Help from "./pages/Help";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import Leads from "./pages/Leads";
+import EmailTemplates from "./pages/EmailTemplates";
+import EmailCampaigns from "./pages/EmailCampaigns";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -124,6 +127,30 @@ const App = () => (
               element={
                 <AuthGuard>
                   <Settings />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/leads"
+              element={
+                <AuthGuard>
+                  <Leads />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/email-templates"
+              element={
+                <AuthGuard>
+                  <EmailTemplates />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/email-campaigns"
+              element={
+                <AuthGuard>
+                  <EmailCampaigns />
                 </AuthGuard>
               }
             />

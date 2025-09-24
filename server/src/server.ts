@@ -16,6 +16,9 @@ import allowedTablesRouter from "./routes/allowedTables";
 import queriesRouter from "./routes/queries";
 import billingRouter from "./routes/billing";
 import sheetsRouter from "./routes/sheets";
+import leadsRouter from "./routes/leads";
+import emailTemplatesRouter from "./routes/email-templates";
+import emailCampaignsRouter from "./routes/email-campaigns";
 
 const app = express();
 app.set("x-powered-by", false);
@@ -45,6 +48,9 @@ app.use("/allowed-tables", allowedTablesRouter);
 app.use("/queries", queriesRouter);
 app.use("/billing", billingRouter);
 app.use("/sheets", sheetsRouter);
+app.use("/leads", leadsRouter);
+app.use("/email-templates", emailTemplatesRouter);
+app.use("/email-campaigns", emailCampaignsRouter);
 
 app.use((err: any, _req: any, res: any, _next: any) => {
   logger.error({ err }, "Unhandled error");

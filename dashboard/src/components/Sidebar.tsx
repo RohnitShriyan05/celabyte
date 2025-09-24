@@ -14,6 +14,9 @@ import {
   User,
   BarChart3,
   LogOut,
+  FileSpreadsheet,
+  Mail,
+  Send,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -44,6 +47,24 @@ const navigation = [
     name: "Saved Queries",
     href: "/queries",
     icon: History,
+    current: false,
+  },
+  {
+    name: "Lead Management",
+    href: "/leads",
+    icon: FileSpreadsheet,
+    current: false,
+  },
+  {
+    name: "Email Templates",
+    href: "/email-templates",
+    icon: Mail,
+    current: false,
+  },
+  {
+    name: "Email Campaigns",
+    href: "/email-campaigns",
+    icon: Send,
     current: false,
   },
   {

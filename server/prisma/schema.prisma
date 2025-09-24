@@ -20,6 +20,10 @@ model Tenant {
   tables      AllowedTable[]
   users       UserTenant[]
   subscription Subscription?
+  leads       Lead[]
+  emailTemplates EmailTemplate[]
+  emailLogs   EmailLog[]
+  leadUploads LeadUpload[]
 }
 
 model Connection {
@@ -258,4 +262,95 @@ enum InvoiceStatus {
   PAID
   VOID
   UNCOLLECTIBLE
+}
+
+// Lead Management Models
+model Lead {
+  id          String      @id @default(cuid())
+  tenantId    String
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  country     String?
+  state       String?
+  city        String?
+  industry    String?
+  jobTitle    String?
+  leadSource  String?
+  tags        String      @default("[]") // JSON array of tags
+  customFields String     @default("{}") // JSON object for additional fields
+  status      LeadStatus  @default(NEW)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  emailsSent  EmailLog[]
+}
+
+model EmailTemplate {
+  id          String        @id @default(cuid())
+  tenantId    String
+  name        String        @unique
+  subject     String
+  content     String        // HTML content
+  variables   String        @default("[]") // JSON array of template variables
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  
+  tenant      Tenant        @relation(fields: [tenantId], references: [id])
+  emailsSent  EmailLog[]
+}
+
+model EmailLog {
+  id         String           @id @default(cuid())
+  tenantId   String
+  leadId     String
+  templateId String?
+  subject    String
+  content    String
+  status     EmailStatus
+  sentAt     DateTime?
+  errorMsg   String?
+  createdAt  DateTime         @default(now())
+  
+  tenant     Tenant           @relation(fields: [tenantId], references: [id])
+  lead       Lead             @relation(fields: [leadId], references: [id])
+  template   EmailTemplate?   @relation(fields: [templateId], references: [id])
+}
+
+model LeadUpload {
+  id          String    @id @default(cuid())
+  tenantId    String
+  fileName    String
+  totalLeads  Int
+  processedLeads Int
+  failedLeads Int
+  status      UploadStatus @default(PROCESSING)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  UNQUALIFIED
+  CONVERTED
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+  BOUNCED
+}
+
+enum UploadStatus {
+  PROCESSING
+  COMPLETED
+  FAILED
 }
