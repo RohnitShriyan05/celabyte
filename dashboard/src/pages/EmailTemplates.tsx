@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
+import { apiCall } from '@/utils/api';
 
 interface EmailTemplate {
   id: string;
@@ -117,15 +118,7 @@ export default function EmailTemplatesPage() {
   const fetchTemplates = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/email-templates', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      
-      if (!response.ok) throw new Error('Failed to fetch templates');
-      
-      const data = await response.json();
+      const data = await apiCall('/email-templates');
       setTemplates(data.templates);
     } catch (error) {
       console.error('Error fetching templates:', error);
@@ -141,24 +134,15 @@ export default function EmailTemplatesPage() {
 
   const saveTemplate = async () => {
     try {
-      const url = editingTemplate 
-        ? `/api/email-templates/${editingTemplate.id}` 
-        : '/api/email-templates';
+      const endpoint = editingTemplate 
+        ? `/email-templates/${editingTemplate.id}` 
+        : '/email-templates';
       const method = editingTemplate ? 'PUT' : 'POST';
 
-      const response = await fetch(url, {
+      await apiCall(endpoint, {
         method,
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify(formData)
       });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to save template');
-      }
 
       toast({
         title: 'Success',
@@ -181,14 +165,9 @@ export default function EmailTemplatesPage() {
     if (!confirm('Are you sure you want to delete this template?')) return;
 
     try {
-      const response = await fetch(`/api/email-templates/${templateId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+      await apiCall(`/email-templates/${templateId}`, {
+        method: 'DELETE'
       });
-
-      if (!response.ok) throw new Error('Failed to delete template');
 
       toast({
         title: 'Success',
@@ -208,18 +187,12 @@ export default function EmailTemplatesPage() {
 
   const cloneTemplate = async (template: EmailTemplate) => {
     try {
-      const response = await fetch(`/api/email-templates/${template.id}/clone`, {
+      await apiCall(`/email-templates/${template.id}/clone`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify({
           newName: `${template.name} (Copy)`
         })
       });
-
-      if (!response.ok) throw new Error('Failed to clone template');
 
       toast({
         title: 'Success',
