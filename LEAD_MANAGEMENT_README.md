@@ -5,6 +5,7 @@ This application has been transformed into a comprehensive lead management syste
 ## Features
 
 ### 1. Lead Management
+
 - **Excel/CSV Upload**: Upload lead data from spreadsheet files
 - **Lead Database**: Store and manage lead information including:
   - Name, Email, Phone, Company
@@ -16,6 +17,7 @@ This application has been transformed into a comprehensive lead management syste
 - **Export Functionality**: Export filtered leads to Excel files
 
 ### 2. Email Templates
+
 - **Template Management**: Create, edit, and manage email templates
 - **Variable Support**: Use dynamic variables like {{name}}, {{company}}, {{country}}
 - **Template Examples**: Pre-built templates for welcome, follow-up, and holiday emails
@@ -23,6 +25,7 @@ This application has been transformed into a comprehensive lead management syste
 - **Template Cloning**: Duplicate and modify existing templates
 
 ### 3. AI-Powered Email Campaigns
+
 - **Natural Language Criteria**: Describe your target audience in plain English
   - "Send to all people in India"
   - "Send to all CEOs and CTOs"
@@ -33,6 +36,7 @@ This application has been transformed into a comprehensive lead management syste
 - **Campaign Analytics**: Track email delivery, success rates, and performance
 
 ### 4. Email Analytics
+
 - **Delivery Tracking**: Monitor sent, failed, and bounced emails
 - **Template Performance**: See which templates perform best
 - **Daily Activity**: View email sending activity over time
@@ -41,24 +45,29 @@ This application has been transformed into a comprehensive lead management syste
 ## Setup Instructions
 
 ### 1. Server Setup
+
 ```bash
 cd server
 npm install
 ```
 
 ### 2. Environment Configuration
+
 Copy `.env.example` to `.env` and configure:
+
 ```bash
 cp .env.example .env
 ```
 
 Required environment variables:
+
 - `JWT_SECRET`: Secret key for authentication
 - `GEMINI_API_KEY`: Google Gemini AI API key for natural language processing
 - `SMTP_*`: Email server configuration (Gmail, SendGrid, etc.)
 - `DATABASE_URL`: SQLite database path (default: file:./prisma/dev.db)
 
 ### 3. Database Setup
+
 ```bash
 # Generate Prisma client
 npx prisma generate
@@ -68,12 +77,14 @@ npx prisma db push
 ```
 
 ### 4. Client Setup
+
 ```bash
 cd dashboard
 npm install
 ```
 
 ### 5. Start Development Servers
+
 ```bash
 # Start server (from /server directory)
 npm run dev
@@ -85,12 +96,14 @@ npm run dev
 ## Usage Guide
 
 ### Uploading Leads
+
 1. Go to **Lead Management** → **Upload Leads** tab
 2. Drag & drop or select your Excel/CSV file
 3. Ensure your file has columns like: Name, Email, Company, Country, etc.
 4. Monitor upload progress and results
 
 ### Creating Email Templates
+
 1. Go to **Email Templates**
 2. Click "New Template"
 3. Use the template editor or choose from examples
@@ -98,6 +111,7 @@ npm run dev
 5. Preview your template before saving
 
 ### Sending Campaigns
+
 1. Go to **Email Campaigns**
 2. Select an email template
 3. Enter your criteria in natural language:
@@ -107,6 +121,7 @@ npm run dev
 5. Send the campaign when ready
 
 ### Supported Lead Data Columns
+
 - **Name** (required)
 - **Email** (required)
 - Phone
@@ -119,7 +134,9 @@ npm run dev
 - Lead Source
 
 ### Email Template Variables
+
 Use these variables in your templates:
+
 - `{{name}}` - Lead's name
 - `{{email}}` - Lead's email
 - `{{company}}` - Company name
@@ -132,6 +149,7 @@ Use these variables in your templates:
 - `{{phone}}` - Phone number
 
 ### AI Campaign Examples
+
 - "Send welcome email to all new leads"
 - "Send follow-up to all people in USA working in healthcare"
 - "Send holiday greetings to all leads from last month"
@@ -141,6 +159,7 @@ Use these variables in your templates:
 ## API Endpoints
 
 ### Leads
+
 - `POST /api/leads/upload` - Upload lead file
 - `GET /api/leads` - List leads with filtering
 - `GET /api/leads/stats` - Get lead statistics
@@ -148,6 +167,7 @@ Use these variables in your templates:
 - `POST /api/leads/export` - Export leads to Excel
 
 ### Email Templates
+
 - `GET /api/email-templates` - List templates
 - `POST /api/email-templates` - Create template
 - `PUT /api/email-templates/:id` - Update template
@@ -155,6 +175,7 @@ Use these variables in your templates:
 - `POST /api/email-templates/:id/clone` - Clone template
 
 ### Email Campaigns
+
 - `POST /api/email-campaigns/send` - Send AI campaign
 - `GET /api/email-campaigns/logs` - Get email logs
 - `GET /api/email-campaigns/analytics` - Get campaign analytics
@@ -162,6 +183,7 @@ Use these variables in your templates:
 ## Database Schema
 
 The system uses the following main models:
+
 - **Lead**: Stores lead information and status
 - **EmailTemplate**: Email templates with variables
 - **EmailLog**: Tracks sent emails and their status
@@ -170,6 +192,7 @@ The system uses the following main models:
 ## Technology Stack
 
 ### Backend
+
 - Node.js + Express
 - Prisma ORM with SQLite
 - Google Gemini AI for natural language processing
@@ -178,6 +201,7 @@ The system uses the following main models:
 - Multer for file uploads
 
 ### Frontend
+
 - React + TypeScript
 - React Router for navigation
 - React Dropzone for file uploads
@@ -186,6 +210,7 @@ The system uses the following main models:
 - XLSX.js for client-side Excel processing
 
 ## Security Features
+
 - JWT authentication
 - Request rate limiting
 - File upload validation
@@ -193,12 +218,15 @@ The system uses the following main models:
 - Email template sanitization
 
 ## Deployment
+
 The system can be deployed using:
+
 - Docker (see docker-compose.yml)
 - Traditional hosting with Node.js
 - Cloud platforms (AWS, GCP, Azure)
 
 Make sure to:
+
 1. Configure production environment variables
 2. Use a production database (PostgreSQL recommended)
 3. Set up proper email service (SendGrid, AWS SES, etc.)

@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>API Test</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Email Templates API Test</h1>
     <button onclick="testAPI()">Test Email Templates API</button>
     <div id="result"></div>
 
     <script>
-        async function testAPI() {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QtdXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsInRlbmFudElkIjoidGVzdC10ZW5hbnQiLCJpYXQiOjE3NTg3MzU0MDB9.aP-m63L2Y0nhVUYrYSTEVC3NScwrue3kkA2z2Tk098k';
-            
-            try {
-                const response = await fetch('http://localhost:9090/email-templates', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const data = await response.json();
-                document.getElementById('result').innerHTML = `
+      async function testAPI() {
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QtdXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsInRlbmFudElkIjoidGVzdC10ZW5hbnQiLCJpYXQiOjE3NTg3MzU0MDB9.aP-m63L2Y0nhVUYrYSTEVC3NScwrue3kkA2z2Tk098k";
+
+        try {
+          const response = await fetch(
+            "http://localhost:9090/email-templates",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await response.json();
+          document.getElementById("result").innerHTML = `
                     <h2>Response:</h2>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
-            } catch (error) {
-                document.getElementById('result').innerHTML = `
+        } catch (error) {
+          document.getElementById("result").innerHTML = `
                     <h2>Error:</h2>
                     <pre>${error.message}</pre>
                 `;
-            }
         }
+      }
     </script>
-</body>
+  </body>
 </html>

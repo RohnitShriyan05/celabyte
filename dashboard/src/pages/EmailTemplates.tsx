@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { apiCall } from '@/utils/api';
+import { DashboardLayout } from '@/components/DashboardLayout';
 
 interface EmailTemplate {
   id: string;
@@ -273,15 +274,16 @@ export default function EmailTemplatesPage() {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">Email Templates</h1>
-          <p className="text-gray-600">Create and manage email templates for your campaigns</p>
-        </div>
-        <Button onClick={() => setShowForm(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          New Template
+    <DashboardLayout>
+      <div className="container mx-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Email Templates</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Create and manage email templates for your campaigns</p>
+          </div>
+          <Button onClick={() => setShowForm(true)} className="w-full sm:w-auto">
+            <Plus className="w-4 h-4 mr-2" />
+            New Template
         </Button>
       </div>
 
@@ -559,5 +561,6 @@ export default function EmailTemplatesPage() {
         </CardContent>
       </Card>
     </div>
+    </DashboardLayout>
   );
 }

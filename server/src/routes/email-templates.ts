@@ -1,24 +1,24 @@
-import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
-import { authenticateToken } from '../auth/middleware.js';
-import { z } from 'zod';
+import { Router } from "express";
+import { PrismaClient } from "@prisma/client";
+import { authenticateToken } from "../auth/middleware.js";
+import { z } from "zod";
 
 const router = Router();
 const prisma = new PrismaClient();
 
 const templateSchema = z.object({
-  name: z.string().min(1, 'Template name is required'),
-  subject: z.string().min(1, 'Subject is required'),
-  content: z.string().min(1, 'Content is required'),
-  variables: z.array(z.string()).optional()
+  name: z.string().min(1, "Template name is required"),
+  subject: z.string().min(1, "Subject is required"),
+  content: z.string().min(1, "Content is required"),
+  variables: z.array(z.string()).optional(),
 });
 
 const updateTemplateSchema = templateSchema.partial().extend({
-  isActive: z.boolean().optional()
+  isActive: z.boolean().optional(),
 });
 
 // Get all email templates
-router.get('/', authenticateToken, async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   try {
     const tenantId = req.user!.tenantId;
     const { page = 1, limit = 20, search, isActive } = req.query;
@@ -28,13 +28,13 @@ router.get('/', authenticateToken, async (req, res) => {
 
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { subject: { contains: search, mode: 'insensitive' } }
+        { name: { contains: search, mode: "insensitive" } },
+        { subject: { contains: search, mode: "insensitive" } },
       ];
     }
 
     if (isActive !== undefined) {
-      where.isActive = isActive === 'true';
+      where.isActive = isActive === "true";
     }
 
     const [templates, total] = await Promise.all([
@@ -42,31 +42,31 @@ router.get('/', authenticateToken, async (req, res) => {
         where,
         skip,
         take: Number(limit),
-        orderBy: { createdAt: 'desc' }
+        orderBy: { createdAt: "desc" },
       }),
-      prisma.emailTemplate.count({ where })
+      prisma.emailTemplate.count({ where }),
     ]);
 
     // Parse variables JSON for each template
     const templatesWithParsedVars = templates.map((template: any) => ({
       ...template,
-      variables: JSON.parse(template.variables || '[]')
+      variables: JSON.parse(template.variables || "[]"),
     }));
 
     res.json({
       templates: templatesWithParsedVars,
       total,
       page: Number(page),
-      totalPages: Math.ceil(total / Number(limit))
+      totalPages: Math.ceil(total / Number(limit)),
     });
   } catch (error) {
-    console.error('Error fetching email templates:', error);
-    res.status(500).json({ error: 'Failed to fetch email templates' });
+    console.error("Error fetching email templates:", error);
+    res.status(500).json({ error: "Failed to fetch email templates" });
   }
 });
 
 // Get single email template
-router.get('/:templateId', authenticateToken, async (req, res) => {
+router.get("/:templateId", authenticateToken, async (req, res) => {
   try {
     const { templateId } = req.params;
     const tenantId = req.user!.tenantId;
@@ -74,32 +74,32 @@ router.get('/:templateId', authenticateToken, async (req, res) => {
     const template = await prisma.emailTemplate.findFirst({
       where: {
         id: templateId,
-        tenantId
+        tenantId,
       },
       include: {
         emailsSent: {
           take: 10,
-          orderBy: { createdAt: 'desc' }
-        }
-      }
+          orderBy: { createdAt: "desc" },
+        },
+      },
     });
 
     if (!template) {
-      return res.status(404).json({ error: 'Template not found' });
+      return res.status(404).json({ error: "Template not found" });
     }
 
     res.json({
       ...template,
-      variables: JSON.parse(template.variables || '[]')
+      variables: JSON.parse(template.variables || "[]"),
     });
   } catch (error) {
-    console.error('Error fetching email template:', error);
-    res.status(500).json({ error: 'Failed to fetch email template' });
+    console.error("Error fetching email template:", error);
+    res.status(500).json({ error: "Failed to fetch email template" });
   }
 });
 
 // Create new email template
-router.post('/', authenticateToken, async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   try {
     const tenantId = req.user!.tenantId;
     const validatedData = templateSchema.parse(req.body);
@@ -108,37 +108,39 @@ router.post('/', authenticateToken, async (req, res) => {
     const existingTemplate = await prisma.emailTemplate.findFirst({
       where: {
         name: validatedData.name,
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     if (existingTemplate) {
-      return res.status(400).json({ error: 'Template with this name already exists' });
+      return res
+        .status(400)
+        .json({ error: "Template with this name already exists" });
     }
 
     const template = await prisma.emailTemplate.create({
       data: {
         ...validatedData,
         variables: JSON.stringify(validatedData.variables || []),
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     res.status(201).json({
       ...template,
-      variables: JSON.parse(template.variables)
+      variables: JSON.parse(template.variables),
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: error.errors });
     }
-    console.error('Error creating email template:', error);
-    res.status(500).json({ error: 'Failed to create email template' });
+    console.error("Error creating email template:", error);
+    res.status(500).json({ error: "Failed to create email template" });
   }
 });
 
 // Update email template
-router.put('/:templateId', authenticateToken, async (req, res) => {
+router.put("/:templateId", authenticateToken, async (req, res) => {
   try {
     const { templateId } = req.params;
     const tenantId = req.user!.tenantId;
@@ -148,12 +150,12 @@ router.put('/:templateId', authenticateToken, async (req, res) => {
     const existingTemplate = await prisma.emailTemplate.findFirst({
       where: {
         id: templateId,
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     if (!existingTemplate) {
-      return res.status(404).json({ error: 'Template not found' });
+      return res.status(404).json({ error: "Template not found" });
     }
 
     // If updating name, check for duplicates
@@ -162,12 +164,14 @@ router.put('/:templateId', authenticateToken, async (req, res) => {
         where: {
           name: validatedData.name,
           tenantId,
-          id: { not: templateId }
-        }
+          id: { not: templateId },
+        },
       });
 
       if (duplicateTemplate) {
-        return res.status(400).json({ error: 'Template with this name already exists' });
+        return res
+          .status(400)
+          .json({ error: "Template with this name already exists" });
       }
     }
 
@@ -178,24 +182,24 @@ router.put('/:templateId', authenticateToken, async (req, res) => {
 
     const template = await prisma.emailTemplate.update({
       where: { id: templateId },
-      data: updateData
+      data: updateData,
     });
 
     res.json({
       ...template,
-      variables: JSON.parse(template.variables)
+      variables: JSON.parse(template.variables),
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: error.errors });
     }
-    console.error('Error updating email template:', error);
-    res.status(500).json({ error: 'Failed to update email template' });
+    console.error("Error updating email template:", error);
+    res.status(500).json({ error: "Failed to update email template" });
   }
 });
 
 // Delete email template
-router.delete('/:templateId', authenticateToken, async (req, res) => {
+router.delete("/:templateId", authenticateToken, async (req, res) => {
   try {
     const { templateId } = req.params;
     const tenantId = req.user!.tenantId;
@@ -203,23 +207,23 @@ router.delete('/:templateId', authenticateToken, async (req, res) => {
     const deletedTemplate = await prisma.emailTemplate.deleteMany({
       where: {
         id: templateId,
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     if (deletedTemplate.count === 0) {
-      return res.status(404).json({ error: 'Template not found' });
+      return res.status(404).json({ error: "Template not found" });
     }
 
-    res.json({ message: 'Template deleted successfully' });
+    res.json({ message: "Template deleted successfully" });
   } catch (error) {
-    console.error('Error deleting email template:', error);
-    res.status(500).json({ error: 'Failed to delete email template' });
+    console.error("Error deleting email template:", error);
+    res.status(500).json({ error: "Failed to delete email template" });
   }
 });
 
 // Preview template with sample data
-router.post('/:templateId/preview', authenticateToken, async (req, res) => {
+router.post("/:templateId/preview", authenticateToken, async (req, res) => {
   try {
     const { templateId } = req.params;
     const tenantId = req.user!.tenantId;
@@ -228,22 +232,22 @@ router.post('/:templateId/preview', authenticateToken, async (req, res) => {
     const template = await prisma.emailTemplate.findFirst({
       where: {
         id: templateId,
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     if (!template) {
-      return res.status(404).json({ error: 'Template not found' });
+      return res.status(404).json({ error: "Template not found" });
     }
 
     // Replace template variables with sample data
     let previewSubject = template.subject;
     let previewContent = template.content;
 
-    const variables = JSON.parse(template.variables || '[]');
+    const variables = JSON.parse(template.variables || "[]");
     variables.forEach((variable: string) => {
       const value = sampleData[variable] || `{{${variable}}}`;
-      const regex = new RegExp(`{{${variable}}}`, 'g');
+      const regex = new RegExp(`{{${variable}}}`, "g");
       previewSubject = previewSubject.replace(regex, value);
       previewContent = previewContent.replace(regex, value);
     });
@@ -252,46 +256,48 @@ router.post('/:templateId/preview', authenticateToken, async (req, res) => {
       subject: previewSubject,
       content: previewContent,
       variables: variables,
-      sampleData
+      sampleData,
     });
   } catch (error) {
-    console.error('Error previewing email template:', error);
-    res.status(500).json({ error: 'Failed to preview email template' });
+    console.error("Error previewing email template:", error);
+    res.status(500).json({ error: "Failed to preview email template" });
   }
 });
 
 // Clone template
-router.post('/:templateId/clone', authenticateToken, async (req, res) => {
+router.post("/:templateId/clone", authenticateToken, async (req, res) => {
   try {
     const { templateId } = req.params;
     const tenantId = req.user!.tenantId;
     const { newName } = req.body;
 
     if (!newName) {
-      return res.status(400).json({ error: 'New template name is required' });
+      return res.status(400).json({ error: "New template name is required" });
     }
 
     const originalTemplate = await prisma.emailTemplate.findFirst({
       where: {
         id: templateId,
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     if (!originalTemplate) {
-      return res.status(404).json({ error: 'Template not found' });
+      return res.status(404).json({ error: "Template not found" });
     }
 
     // Check if new name already exists
     const existingTemplate = await prisma.emailTemplate.findFirst({
       where: {
         name: newName,
-        tenantId
-      }
+        tenantId,
+      },
     });
 
     if (existingTemplate) {
-      return res.status(400).json({ error: 'Template with this name already exists' });
+      return res
+        .status(400)
+        .json({ error: "Template with this name already exists" });
     }
 
     const clonedTemplate = await prisma.emailTemplate.create({
@@ -301,17 +307,17 @@ router.post('/:templateId/clone', authenticateToken, async (req, res) => {
         content: originalTemplate.content,
         variables: originalTemplate.variables,
         tenantId,
-        isActive: false // Start as inactive
-      }
+        isActive: false, // Start as inactive
+      },
     });
 
     res.status(201).json({
       ...clonedTemplate,
-      variables: JSON.parse(clonedTemplate.variables)
+      variables: JSON.parse(clonedTemplate.variables),
     });
   } catch (error) {
-    console.error('Error cloning email template:', error);
-    res.status(500).json({ error: 'Failed to clone email template' });
+    console.error("Error cloning email template:", error);
+    res.status(500).json({ error: "Failed to clone email template" });
   }
 });
 

@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
+import { DashboardLayout } from '@/components/DashboardLayout';
 
 interface EmailTemplate {
   id: string;
@@ -238,13 +239,14 @@ export default function EmailCampaignsPage() {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">Email Campaigns</h1>
-          <p className="text-gray-600">Send AI-powered email campaigns to your leads</p>
+    <DashboardLayout>
+      <div className="container mx-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Email Campaigns</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Send AI-powered email campaigns to your leads</p>
+          </div>
         </div>
-      </div>
 
       {/* Analytics Cards */}
       {analytics && (
@@ -559,5 +561,6 @@ export default function EmailCampaignsPage() {
         </TabsContent>
       </Tabs>
     </div>
+    </DashboardLayout>
   );
 }
