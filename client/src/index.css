@@ -2,111 +2,155 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Celabyte Design System - Google Cloud Inspired
+/* Celabyte Unified Design System - Google Cloud Inspired
 Primary: White backgrounds | Google Blue #4285F4 accent
 Clean, modern SaaS styling. All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Core Brand Colors - Clean White Base */
-    --background: 0 0% 100%; /* Pure white */
-    --foreground: 0 0% 9%; /* Near black text */
+    /* Core Background & Text */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 18%;
 
-    --card: 0 0% 100%; /* White cards */
-    --card-foreground: 0 0% 9%;
+    /* Cards & Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+    --card-hover: 210 40% 98%;
 
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
+    --popover-foreground: 220 13% 18%;
 
-    /* Google Blue Primary */
-    --primary: 217 89% 61%; /* #4285F4 Google Blue */
+    /* Primary Brand Colors - Google Blue */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 91% 55%;
 
-    --secondary: 0 0% 96%; /* Light gray */
-    --secondary-foreground: 0 0% 9%;
+    /* Secondary */
+    --secondary: 210 16% 93%;
+    --secondary-foreground: 220 13% 18%;
+    --secondary-hover: 210 16% 88%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    /* Muted */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 217 89% 61%; /* Google Blue */
+    /* Accent - Google Blue */
+    --accent: 217 89% 61%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%; /* #EA4335 Google Red */
+    /* Destructive - Google Red */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%; /* Light gray borders */
-    --input: 0 0% 100%; /* White inputs */
-    --ring: 217 89% 61%; /* Google Blue ring */
+    /* Borders & Inputs */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
+
+    /* Success & Warning - GCP Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
 
     /* Google Color Palette */
-    --google-blue: 217 89% 61%; /* #4285F4 */
-    --google-green: 142 71% 45%; /* #34A853 */
-    --google-yellow: 45 100% 51%; /* #FBBC05 */
-    --google-red: 0 72% 51%; /* #EA4335 */
+    --google-blue: 217 89% 61%;
+    --google-green: 142 71% 45%;
+    --google-yellow: 45 100% 51%;
+    --google-red: 0 72% 51%;
 
     /* Design System Extensions */
-    --surface: 0 0% 97%; /* Very light gray surface */
+    --surface: 0 0% 97%;
     --surface-hover: 0 0% 95%;
-    
-    /* Gradients - Clean and Subtle */
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(210 100% 70%));
+    --gradient-secondary: linear-gradient(135deg, hsl(210 40% 96%), hsl(210 16% 93%));
     --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(217 89% 96%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 98%));
     --gradient-accent: linear-gradient(135deg, hsl(217 89% 61%), hsl(217 89% 71%));
-    
-    /* Shadows & Effects - Google Style */
-    --shadow-glow: 0 0 20px hsl(217 89% 61% / 0.15);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(60 64 67 / 0.3), 0 1px 3px 1px rgb(60 64 67 / 0.15);
+    --shadow: 0 1px 3px 0 rgb(60 64 67 / 0.3), 0 4px 8px 3px rgb(60 64 67 / 0.15);
+    --shadow-md: 0 2px 6px 2px rgb(60 64 67 / 0.15), 0 8px 24px 4px rgb(60 64 67 / 0.15);
+    --shadow-lg: 0 4px 12px 6px rgb(60 64 67 / 0.15), 0 20px 40px 6px rgb(60 64 67 / 0.15);
+    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.3);
     --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.08);
     --shadow-elevated: 0 8px 24px hsl(0 0% 0% / 0.12);
     --shadow-hover: 0 4px 12px hsl(0 0% 0% / 0.15);
 
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  /* Dark Theme */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --card-hover: 240 5% 6%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 217 91% 65%;
+    --primary-foreground: 240 10% 3.9%;
+    --primary-hover: 217 91% 70%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-hover: 240 5% 26%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 240 5% 6%;
+    --muted-foreground: 240 5% 65%;
 
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 240 6% 10%;
+    --input: 240 6% 10%;
+    --ring: 217 91% 65%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 240 10% 3.9%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 65%), hsl(210 100% 75%));
+    --gradient-secondary: linear-gradient(135deg, hsl(240 5% 6%), hsl(240 4% 16%));
+    --gradient-hero: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(217 91% 10%));
+    --gradient-card: linear-gradient(145deg, hsl(240 10% 5%), hsl(240 10% 3.9%));
+    --gradient-accent: linear-gradient(135deg, hsl(217 91% 65%), hsl(217 91% 75%));
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 20px hsl(217 91% 65% / 0.3);
+    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
+    --shadow-elevated: 0 8px 24px hsl(0 0% 0% / 0.4);
+    --shadow-hover: 0 4px 12px hsl(0 0% 0% / 0.3);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -126,92 +170,174 @@ Clean, modern SaaS styling. All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/30;
   }
 }
 
 @layer components {
-  /* Google Cloud Style Components */
+  /* Landing Page Components */
   .gradient-hero {
     background: var(--gradient-hero);
   }
-  
+
   .gradient-card {
     background: var(--gradient-card);
   }
-  
+
   .gradient-accent {
     background: var(--gradient-accent);
   }
-  
+
   .shadow-card {
     box-shadow: var(--shadow-card);
   }
-  
+
   .shadow-elevated {
     box-shadow: var(--shadow-elevated);
   }
-  
+
   .shadow-hover {
     box-shadow: var(--shadow-hover);
   }
-  
+
   .glow-accent {
     box-shadow: var(--shadow-glow);
   }
-  
+
   /* Google Color Utilities */
   .google-blue {
     color: hsl(var(--google-blue));
   }
-  
+
   .bg-google-blue {
     background-color: hsl(var(--google-blue));
   }
-  
+
   .google-green {
     color: hsl(var(--google-green));
   }
-  
+
   .bg-google-green {
     background-color: hsl(var(--google-green));
   }
-  
+
   .google-yellow {
     color: hsl(var(--google-yellow));
   }
-  
+
   .bg-google-yellow {
     background-color: hsl(var(--google-yellow));
   }
-  
+
   .google-red {
     color: hsl(var(--google-red));
   }
-  
+
   .bg-google-red {
     background-color: hsl(var(--google-red));
   }
-  
-  /* Smooth Animations */
-  .transition-all-smooth {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Card Styles */
-  .card-hover {
-    transition: all 0.2s ease;
-  }
-  
-  .card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-  }
-  
+
   /* Text Gradients */
   .text-gradient-accent {
     background: var(--gradient-accent);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Smooth Animations */
+  .transition-all-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Card Styles */
+  .card-hover {
+    transition: all 0.2s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Dashboard Components */
+  .glass-card {
+    @apply bg-card/50 backdrop-blur-xl border border-border/50;
+  }
+
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Mobile responsive improvements */
+  .mobile-header {
+    @apply fixed top-0 left-0 right-0 z-40 h-16 bg-card/95 backdrop-blur-md border-b border-border/50;
+  }
+
+  .mobile-content {
+    @apply pt-16;
+  }
+
+  /* Sidebar animations */
+  .sidebar-enter {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-out;
+  }
+
+  .sidebar-exit {
+    transform: translateX(0);
+  }
+
+  .sidebar-exit-active {
+    transform: translateX(-100%);
+    transition: transform 300ms ease-in;
+  }
+
+  /* Responsive text and spacing */
+  @media (max-width: 768px) {
+    .responsive-padding {
+      @apply px-4 py-3;
+    }
+
+    .responsive-text {
+      @apply text-sm;
+    }
+
+    .responsive-icon {
+      @apply h-4 w-4;
+    }
   }
 }

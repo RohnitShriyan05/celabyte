@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
   return (
@@ -21,13 +22,17 @@ export const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-lg px-8 py-4 bg-google-blue hover:bg-google-blue/90 glow-accent font-semibold">
-                Start Free Trial
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 border-muted-foreground text-muted-foreground hover:bg-muted hover:text-foreground font-semibold">
-                Book a Demo
-              </Button>
+              <Link to="/dashboard">
+                <Button size="lg" className="text-lg px-8 py-4 bg-google-blue hover:bg-google-blue/90 glow-accent font-semibold">
+                  Try Now — It's Free
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 border-muted-foreground text-muted-foreground hover:bg-muted hover:text-foreground font-semibold">
+                  Sign Up Free
+                </Button>
+              </Link>
             </div>
 
             <div className="bg-surface p-6 rounded-xl border shadow-card">

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check, X, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Pricing = () => {
   const plans = [
@@ -146,13 +147,15 @@ export const Pricing = () => {
                 )}
               </div>
 
-              <Button 
-                variant={plan.popular ? "hero" : "outline"} 
-                className="w-full"
-                size="lg"
-              >
-                {plan.cta}
-              </Button>
+              <Link to="/dashboard" className="w-full">
+                <Button 
+                  variant={plan.popular ? "hero" : "outline"} 
+                  className="w-full"
+                  size="lg"
+                >
+                  {plan.cta}
+                </Button>
+              </Link>
             </div>
           ))}
         </div>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const FinalCTA = () => {
   return (
@@ -23,14 +24,18 @@ export const FinalCTA = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-            <Button variant="hero" size="xl" className="group">
-              Get Started Free
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline_hero" size="xl" className="group">
-              <Play className="mr-2 h-5 w-5" />
-              Request a Demo
-            </Button>
+            <Link to="/dashboard">
+              <Button variant="hero" size="xl" className="group">
+                Get Started Free
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link to="/auth">
+              <Button variant="outline_hero" size="xl" className="group">
+                <Play className="mr-2 h-5 w-5" />
+                Sign Up Now
+              </Button>
+            </Link>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 text-center">

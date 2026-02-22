@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,12 +41,16 @@ export const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
-              Sign In
-            </Button>
-            <Button variant="hero" size="sm">
-              Start Free Trial
-            </Button>
+            <Link to="/auth">
+              <Button variant="ghost" size="sm">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/dashboard">
+              <Button variant="hero" size="sm">
+                Start Now
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -75,12 +80,16 @@ export const Navbar = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="ghost" size="sm">
-                  Sign In
-                </Button>
-                <Button variant="hero" size="sm">
-                  Start Free Trial
-                </Button>
+                <Link to="/auth">
+                  <Button variant="ghost" size="sm" className="w-full">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button variant="hero" size="sm" className="w-full">
+                    Start Now
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
